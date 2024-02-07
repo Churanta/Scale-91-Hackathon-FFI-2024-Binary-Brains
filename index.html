@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI Payment</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.3/dist/web3.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <h1>Cryptonium</h1>
+                <p class="subheading">The Crypto Payment Gateway by <b>Binary Brains </b></p>
+            </div>
+            <div class="user-actions">
+                <button id="walletActionBtn" class="custom-btn">Connect Wallet</button>
+                <button id="checkBalanceBtn" class="custom-btn" disabled>Check Balance</button>
+                <p id="walletAddress"></p>
+                <p id="walletBalance"></p>
+            </div>
+        </div>
+    </header>
+
+
+    <main>
+        <!-- <center>
+            <button id="walletActionBtn" class="custom-btn">Connect Wallet</button>
+            <button id="checkBalanceBtn" class="custom-btn" disabled>Check Balance</button>
+            <p id="walletAddress"></p>
+            <p id="walletBalance"></p>
+        </center> -->
+
+
+        <section class="payment-options">
+            <div class="card" id="generate-scanner">
+                <img src="assets/qr-code.png" alt="QR Code">
+                <h2>Generate Scanner to Pay</h2>
+            </div>
+            <div class="card" id="request-money">
+                <img src="assets/cash-payment.png" alt="Cash Payment">
+                <h2>Request Money</h2>
+            </div>
+            <div class="card" id="money-transfer">
+                <img src="assets/transfer.png" alt="Transfer">
+                <h2>Money Transfer</h2>
+            </div>
+            <!-- Existing card elements -->
+            <div class="card" id="transactions">
+                <img src="assets/transaction.png" alt="Ethereum Transactions">
+                <h2>Ethereum Transactions</h2>
+            </div>
+            <div class="card" id="contacts-trigger">
+                <img src="assets/contacts.png" alt="Saved Contacts">
+                <h2>Saved Contacts</h2>
+            </div>
+
+
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Crypto Payment Gateway. All rights reserved. Binary Brains</p>
+    </footer>
+
+    <!-- Popup for Generate Scanner -->
+    <div id="qr-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <div id="qr-progress" style="display: none;">
+                <progress max="100" value="0"></progress>
+            </div>
+            <div id="qr-code-container" style="display: none;">
+                <img src="assets/QR.png" alt="QR Code">
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup for Money Transfer -->
+    <div id="money-transfer-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h2>Money Transfer</h2>
+            <form id="money-transfer-form">
+                <div class="input-group">
+                    <label for="recipient-address">Recipient Address:</label>
+                    <input type="text" id="recipient-address" name="recipient-address"
+                        placeholder="Enter recipient's address" required>
+                </div>
+                <div class="input-group">
+                    <label for="amount-transfer">Amount:</label>
+                    <input type="text" id="amount-transfer" name="amount-transfer" placeholder="Enter amount" required>
+                </div>
+                <button type="submit">Send Money</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Popup for Ethereum Transactions -->
+    <div id="ethereum-transactions-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h2>Ethereum Transactions</h2>
+            <!-- Placeholder for displaying Ethereum transactions -->
+            <div id="ethereum-transactions"></div>
+        </div>
+    </div>
+
+    <!-- Popup for Request Money -->
+    <div id="request-money-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h2>Request Money</h2>
+            <form id="request-money-form">
+                <div class="input-group">
+                    <label for="request-address">Request Address:</label>
+                    <input type="text" id="request-address" name="request-address"
+                        placeholder="Enter requester's address" required>
+                </div>
+                <div class="input-group">
+                    <label for="amount-request">Amount:</label>
+                    <input type="text" id="amount-request" name="amount-request" placeholder="Enter amount" required>
+                </div>
+                <button type="submit">Request Money</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Popup for Contacts List -->
+    <div id="contacts-list-popup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h2>Saved Contacts</h2>
+            <div id="contacts-list" class="contacts-list">
+                <!-- Contacts will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+
+    <script>
+        // Function to show progress bar for 2 seconds
+        function showProgressBar() {
+            const progressBar = document.getElementById('qr-progress');
+            const qrCodeContainer = document.getElementById('qr-code-container');
+
+            progressBar.style.display = 'block';
+            qrCodeContainer.style.display = 'none';
+
+            let progressValue = 0;
+            const interval = setInterval(() => {
+                progressValue += 35;
+                progressBar.querySelector('progress').value = progressValue;
+                if (progressValue >= 100) {
+                    clearInterval(interval);
+                    progressBar.style.display = 'none';
+                    qrCodeContainer.style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        // Add event listener to generate scanner button
+        document.getElementById('generate-scanner').addEventListener('click', () => {
+            showProgressBar();
+            // You can add your logic to generate the QR code here
+        });
+    </script>
+
+</body>
+
+</html>
